@@ -6,5 +6,21 @@
  
  - Login Screen
  - Welcome Screen
- - Question list Screen
+ - Questions Screen
  - Result Screen
+
+## Login
+
+User need to enter username and password to proceed to the application.
+
+## Welcome 
+
+This screen will have a welcome text with username. Also there will be three options for quiz level. Questions will be displayed as per chosen option.
+
+## Questions
+
+Questions will be displayed to the user, user have to select one option as answer.
+
+## Result
+
+Question list will be displayed with right or wrong answer. Total score will be displyed and there will be a play again text button. Logout option is there on the screen.
