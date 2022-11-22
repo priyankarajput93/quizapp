@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet, FlatList } from "react-native";
 import { useSelector } from "react-redux";
-import { GlobalStyles } from "../constants/styles";
+import { GlobalStyles } from "../constants/Styles";
 import Button from "../ui/Button";
 import RadioButton from "../ui/RadioButton";
 
@@ -19,7 +19,6 @@ function Result({ navigation }) {
             <RadioButton questionArray={item} disable={true}></RadioButton>
             {
                 item.isCorrectAnswer && <Text style={style.correctAnswerText}> Correct Answer</Text>
-
             }
             {
                 !item.isCorrectAnswer && <Text style={style.wrongAnswerText}> Wrong Answer</Text>
@@ -37,8 +36,6 @@ function Result({ navigation }) {
             </View>
             {
                 questions.map((item, index) => {
-                    console.log("hiiiiiiii");
-                    console.log(item.isCorrectAnswer);
                     if (item.isCorrectAnswer) {
                         totalScore = totalScore + 1;
                     } 
@@ -54,15 +51,15 @@ function Result({ navigation }) {
 
 const style = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 2,
         flexDirection: 'column',
     },
     listContainer: {
-        flex: .9,
+        flex: 1.9,
     },
     totalScoreText: {
         fontSize: 18,
-        color: GlobalStyles.colors.primary800,
+        color: GlobalStyles.colors.gray700,
         fontStyle: 'bold',
         textAlign: 'center',
         marginTop:10
@@ -71,9 +68,8 @@ const style = StyleSheet.create({
         fontSize: 18
     },
     buttonStyle: {
-        width: '100%',
-        position: 'absolute',
-        bottom: 10
+        marginHorizontal: 20,
+        marginVertical: 20,
     },
     questionText: {
         fontSize: 18,
@@ -99,7 +95,7 @@ const style = StyleSheet.create({
     },
     correctAnswerText: {
         color: GlobalStyles.colors.green100,
-        fontSize: 16,
+        fontSize: 18,
         fontStyle: 'bold',
         marginHorizontal: 20,
         marginVertical: 10

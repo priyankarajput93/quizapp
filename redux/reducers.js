@@ -1,18 +1,7 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
+import { createSlice } from "@reduxjs/toolkit";
 
 const BASE_URL = 'https://opentdb.com/api.php';
 
-/*export const deletePost = createAsyncThunk("post/deletePost", async (initialPost) => {
-    const { id } = initialPost
-    try {
-        const response = await axios.delete(`${BASE_URL}/${id}`);
-        if (response?.status === 200) return initialPost;
-        return `${response.status} : ${response.statusText}`;
-    } catch (error) {
-        return error.message
-    }
-})*/
 /*export const getQuestionsList = createAsyncThunk("appData/getQuestionsList", async (count, level) => {
     //const { count, level } = params;
     const getCount = count;
@@ -34,25 +23,12 @@ const BASE_URL = 'https://opentdb.com/api.php';
     }
 })*/
 
-/*export async function getQuestionsList(count, level) {
-    try {
-        const response = await fetch(BASE_URL + `?amount=${count}&difficulty=${level}`);
-        const json = await response.json();
-        console.log(json);
-        return json;
-    } catch (error) {
-        console.log(error);
-    } finally {
-        console.log('Api called');
-    }
-
-}*/
 const appSlice = createSlice({
     name: 'appData',
     initialState: {
         userName: '',
         userPassword: '',
-        level: '',
+        level: 'easy',
         questionList: [],
         status: 'idle',
         error: 'error'
@@ -76,26 +52,32 @@ const appSlice = createSlice({
         setQuestionList: (state, action) => {
             state.questionList = (action.payload);
         },
-    },
-    /*extraReducers(builder) {
-        builder
-            .addCase(getQuestionsList.pending, (state, action) => {
-                state.status = "loading";
-                console.log("builder " + getQuestionsList.pending);
-                console.log("builder status " + state.status);
-            })
-            .addCase(getQuestionsList.fulfilled, (state, action) => {
-                state.status = "succeeded";
-                state.questionList = (action.payload.results);
-                console.log("Question List results");
-               // console.log(state.questionList);
-                //console.log("builder request status " + action.meta.requestStatus);
-            })
-            .addCase(getQuestionsList.rejected, (state, action) => {
-                state.status = "failed";
-                state.error = action.error.message;
-            })
-    }*/
+        clearData: (state, action) => {
+            state.userName = '';
+            state.userPassword = '';
+            state.status = 'idle';
+            state.error = '';
+            state.questionList = [];
+        }
+        /*extraReducers(builder) {
+            builder
+                .addCase(getQuestionsList.pending, (state, action) => {
+                    state.status = "loading";
+                    console.log("builder " + getQuestionsList.pending);
+                    console.log("builder status " + state.status);
+                })
+                .addCase(getQuestionsList.fulfilled, (state, action) => {
+                    state.status = "succeeded";
+                    state.questionList = (action.payload.results);
+                    console.log("Question List results");
+                   // console.log(state.questionList);
+                    //console.log("builder request status " + action.meta.requestStatus);
+                })
+                .addCase(getQuestionsList.rejected, (state, action) => {
+                    state.status = "failed";
+                    state.error = action.error.message;
+                })*/
+    }
 })
 
 export const addUserName = appSlice.actions.addUserName;
@@ -104,8 +86,10 @@ export const gameLevel = appSlice.actions.gameLevel;
 export const setQuestionList = appSlice.actions.setQuestionList;
 export const errorValue = appSlice.actions.errorValue;
 export const apiStatus = appSlice.actions.apiStatus;
+export const clearData = appSlice.actions.clearData;
 
-/*export const allQuestionList = (state) => state.appData.questionList;
+/*
+export const allQuestionList = (state) => state.appData.questionList;
 export const getError = (state) => state.appData.error;
 export const getStatus = (state) => state.appData.status;
 */

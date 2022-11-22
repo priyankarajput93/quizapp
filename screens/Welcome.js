@@ -1,7 +1,6 @@
 
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { useDispatch } from "react-redux";
-import { GlobalStyles } from "../constants/styles";
+import { GlobalStyles } from "../constants/Styles";
 
 import Button from "../ui/Button";
 import RadioButton from "../ui/RadioButton";

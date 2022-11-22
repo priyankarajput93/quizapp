@@ -1,27 +1,30 @@
 import { StyleSheet, View, Text, FlatList } from "react-native";
 import Button from "../ui/Button";
-
 import { useEffect, useState } from "react";
-import { getQuestionsList } from "../api/apiService";
-import { GlobalStyles } from "../constants/styles";
+import { getQuestionsList } from "../api/ApiService";
+import { GlobalStyles } from "../constants/Styles";
 import RadioButton from "../ui/RadioButton";
 import { useSelector } from "react-redux";
 import Loading from "../ui/Loading";
-import { allQuestionList, apiStatus, getError, getStatus, questions, setQuestionList } from "../redux/reducers";
+import { apiStatus, setQuestionList } from "../redux/Reducers";
 import { useDispatch } from "react-redux";
+import { useNetInfo } from "@react-native-community/netinfo";
+import RetryView from "../ui/RetryView";
 
 function Questions({ navigation }) {
 
     const selectedGameLevel = useSelector(state => state.appReducer.level);
     //   const { questionList, status, error } = useSelector((state) => state.appData);
-    const dispatch = useDispatch()
-
+    const dispatch = useDispatch();
+    const useInfo = useNetInfo();
+    var count = 5;
     const questionList = useSelector(state => state.appReducer.questionList);
-    //const questionList = useSelector(allQuestionList);
-    //const status = useSelector(getError);
+
+    const [isAllQuestionsAnswered, setIsAllQuestionsAnswered] = useState(false);
     const status = useSelector(state => state.appReducer.status);
     const error = useSelector(state => state.appReducer.error);
 
+    //  var isAllQuestionsAnswered = false;
     /*useEffect(() => {
         async function getQuestions() {
             //          const questions = await getQuestionsList(10, 'hard');
@@ -30,30 +33,31 @@ function Questions({ navigation }) {
                 // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
               //  const question = questions.payload;
               //  console.log(questions);
+
                 //alert(questions);
               }
         }
         getQuestions();
     }, []);*/
     useEffect(() => {
-        async function getQuestions() {
-            dispatch(apiStatus('loading'));
-            const response = await getQuestionsList(10, selectedGameLevel);
-
-            if (response !== null) {
-                dispatch(apiStatus('succeeded'));
-                response.results.map((object) => {
-                    console.log(object);
-                    object["allAnswerOptions"] = object.incorrect_answers;
-                    object["allAnswerOptions"].push(object.correct_answer);
-                    object["isCorrectAnswer"] = false;
-                    object["selectedAnswer"] = '';
-                });
-                dispatch(setQuestionList(response.results));
-            }
-        }
         getQuestions();
-    }, []);
+    }, [count]);
+
+    async function getQuestions() {
+        dispatch(apiStatus('loading'));
+        const response = await getQuestionsList(count, selectedGameLevel);
+
+        if (response !== null) {
+            dispatch(apiStatus('succeeded'));
+            response.results.map((object) => {
+                object["allAnswerOptions"] = object.incorrect_answers;
+                object["allAnswerOptions"].push(object.correct_answer);
+                object["isCorrectAnswer"] = false;
+                object["selectedAnswer"] = '';
+            });
+            dispatch(setQuestionList(response.results));
+        }
+    }
 
     const renderItem = ({ item }) => (
         <View style={style.itemContainer}>
@@ -77,7 +81,19 @@ function Questions({ navigation }) {
         }
     }
 
-    if (status === 'loading') {
+    function updateCount() {
+        count = count + 10
+    }
+
+    if (status === 'error') {
+        return (
+            <RetryView
+                heading="Connection Error!"
+                message="Please check your internet connection or try again later"
+                onPress={getQuestions()}
+            />
+        );
+    } else if (status === 'loading') {
         return (<Loading />);
     } else if (status === 'succeeded') {
         return (
@@ -85,43 +101,45 @@ function Questions({ navigation }) {
                 <View style={style.listContainer}>
                     <FlatList data={questionList}
                         keyExtractor={item => item.question}
-                        renderItem={renderItem}>
+                        renderItem={renderItem}
+                        onEndReached={updateCount}
+                        onEndReachedThreshold={0.1}
+                    >
                     </FlatList>
                 </View>
                 <View style={style.buttonStyle}>
-                    <Button style={style.submitText} onPress={submitQuiz}>
+                    <Button isEnable={isAllQuestionsAnswered} style={style.submitText} onPress={submitQuiz}>
                         Submit
                     </Button>
                 </View>
             </View >
         );
     } else if (status === "failed") {
-        <Text>{error}</Text>
+        return (<Text>{error}</Text>);
     }
 }
 
 const style = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 2,
         flexDirection: 'column',
     },
     listContainer: {
-        flex: .9,
+        flex: 1.9,
     },
     submitText: {
         fontSize: 18
     },
     buttonStyle: {
-        width: '100%',
-        position: 'absolute',
-        bottom: 10
+        marginHorizontal: 20,
+        marginVertical: 20,
     },
     questionText: {
         fontSize: 18,
         color: GlobalStyles.colors.primary700,
         fontStyle: 'bold',
         marginHorizontal: 10,
-        marginVertical: 10
+        marginVertical: 10,
     },
     optionText: {
         fontSize: 16,
