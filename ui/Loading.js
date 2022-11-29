@@ -2,14 +2,14 @@ import { ActivityIndicator, View, StyleSheet } from "react-native";
 import { GlobalStyles } from "../constants/Styles";
 
 function Loading() {
-    return (<View style={style.container}>
-        <ActivityIndicator
-            size="large"
-            color={GlobalStyles.colors.primary700} />
-    </View>);
+    return (
+        <View
+            style={style.container}>
+            <ActivityIndicator
+                size="large"
+                color={GlobalStyles.colors.primary700} />
+        </View>);
 }
-
-export default Loading;
 
 const style = StyleSheet.create({
     container: {
@@ -20,3 +20,5 @@ const style = StyleSheet.create({
         padding: 24
     }
 });
+
+export default Loading;

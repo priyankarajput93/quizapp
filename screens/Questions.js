@@ -8,15 +8,14 @@ import { useSelector } from "react-redux";
 import Loading from "../ui/Loading";
 import { apiStatus, setQuestionList } from "../redux/Reducer";
 import { useDispatch } from "react-redux";
-import RetryView from "../ui/RetryView";
+import MessageView from "../ui/MessageView";
 
 function Questions({ navigation }) {
 
     const selectedGameLevel = useSelector(state => state.appReducer.level);
     const dispatch = useDispatch();
-    var count = 5;
+    const count = 30;
     const questionList = useSelector(state => state.appReducer.questionList);
-
     const status = useSelector(state => state.appReducer.status);
     const error = useSelector(state => state.appReducer.error);
 
@@ -43,9 +42,16 @@ function Questions({ navigation }) {
     }
 
     const renderItem = ({ item }) => (
-        <View style={style.itemContainer}>
-            <Text style={style.questionText}>{item.id}. {item.question}</Text>
-            <RadioButton questionArray={item} correctAnswer={item.correct_answer}></RadioButton>
+        <View
+            style={style.itemContainer}>
+            <Text
+                style={style.questionText}>
+                {item.id}. {item.question}
+            </Text>
+            <RadioButton
+                questionArray={item}
+                correctAnswer={item.correct_answer}>
+            </RadioButton>
         </View>
     );
 
@@ -64,32 +70,33 @@ function Questions({ navigation }) {
         }
     }
 
-    function updateCount() {
-        count = count + 10
-    }
-
     if (status === 'error') {
         return (
-            <RetryView
+            <MessageView
                 heading="Connection Error!"
                 message="Please check your internet connection or try again later"
-                onPress={getQuestions()}
             />
         );
     } else if (status === 'loading') {
         return (<Loading />);
     } else if (status === 'succeeded') {
         return (
-            <View style={style.container}>
-                <View style={style.listContainer}>
-                    <FlatList data={questionList}
+            <View
+                style={style.container}>
+                <View
+                    style={style.listContainer}>
+                    <FlatList
+                        data={questionList}
                         keyExtractor={item => item.question}
                         renderItem={renderItem}
                     >
                     </FlatList>
                 </View>
-                <View style={style.buttonStyle}>
-                    <Button style={style.submitText} onPress={submitQuiz}>
+                <View
+                    style={style.buttonStyle}>
+                    <Button
+                        style={style.submitText}
+                        onPress={submitQuiz}>
                         Submit
                     </Button>
                 </View>
@@ -97,7 +104,7 @@ function Questions({ navigation }) {
         );
     } else if (status === "failed") {
         return (
-            <Text>
+            <Text style={style.errorText}>
                 {error}
             </Text>);
     }
@@ -138,6 +145,11 @@ const style = StyleSheet.create({
         marginHorizontal: 8,
         marginTop: 10,
         paddingBottom: 8
+    },
+    errorText: {
+        fontSize: 24,
+        color: GlobalStyles.colors.error500,
+        textAlign: 'center'
     }
 });
 export default Questions;

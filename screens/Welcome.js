@@ -1,5 +1,5 @@
 
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { GlobalStyles } from "../constants/Styles";
 
 import Button from "../ui/Button";
@@ -9,27 +9,36 @@ import { useSelector } from "react-redux";
 function Welcome({ navigation }) {
 
     const quizLevels = ["Easy", "Medium", "Hard"];
-
     const name = useSelector(state => state.appReducer.userName);
-    
+
     function startQuiz() {
         navigation.navigate("Questions");
     }
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.welcomeText}>Welcome {name}!!</Text>
-            <Text style={styles.quizLevelText}>Choose Quiz Level</Text>
-            <RadioButton optionList = {quizLevels}></RadioButton>
-                <View style={styles.buttonStyle}>
-                    <Button style={styles.startText} onPress={startQuiz}>
-                        Start Quiz
-                    </Button>
-                </View>
-            </View>);
+        <View
+            style={styles.container}>
+            <Text
+                style={styles.welcomeText}>
+                Welcome {name}!!
+            </Text>
+            <Text
+                style={styles.quizLevelText}>
+                Choose Quiz Level
+            </Text>
+            <RadioButton
+                optionList={quizLevels}>
+            </RadioButton>
+            <View
+                style={styles.buttonStyle}>
+                <Button
+                    style={styles.startText}
+                    onPress={startQuiz}>
+                    Start Quiz
+                </Button>
+            </View>
+        </View>);
 }
-
-export default Welcome;
 
 const styles = StyleSheet.create({
     container: {
@@ -57,3 +66,4 @@ const styles = StyleSheet.create({
         marginVertical: 10
     }
 });
+export default Welcome;

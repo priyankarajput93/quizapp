@@ -24,15 +24,17 @@ function Result({ navigation }) {
                 !item.isCorrectAnswer && <Text style={style.wrongAnswerText}> Wrong Answer</Text>
             }
             {
-                !item.isCorrectAnswer && <Text style={style.correctAnswerText}> Correct Answer: {item.correct_answer} </Text>
+                !item.isCorrectAnswer && <Text style={style.correctAnswerText}> Correct Answer - {item.correct_answer} </Text>
             }
         </View>
     );
-
     return (
-        <View style={style.container}>
-            <View style={style.listContainer}>
-                <FlatList data={questions}
+        <View
+            style={style.container}>
+            <View
+                style={style.listContainer}>
+                <FlatList
+                    data={questions}
                     keyExtractor={item => item.question}
                     renderItem={renderItem}>
                 </FlatList>
@@ -44,9 +46,17 @@ function Result({ navigation }) {
                     }
                 })
             }
-            <Text Text style={style.totalScoreText}>Total Score: {totalScore}</Text>
-            <View style={style.buttonStyle}>
-                <Button style={style.retryText} onPress={retryQuiz}>Play Again </Button>
+            <Text
+                style={style.totalScoreText}>
+                Total Score: {totalScore}
+            </Text>
+            <View
+                style={style.buttonStyle}>
+                <Button
+                    style={style.retryText}
+                    onPress={retryQuiz}>
+                    Play Again
+                </Button>
             </View>
         </View >
     );

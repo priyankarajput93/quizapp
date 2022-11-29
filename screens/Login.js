@@ -5,13 +5,13 @@ import { GlobalStyles } from "../constants/Styles";
 import Button from "../ui/Button";
 import { addUserName, addUserPassword } from "../redux/Reducer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect } from "react";
 
 function Login({ navigation }) {
 
     const enteredName = useSelector(state => state.appReducer.userName);
     const enteredPassword = useSelector(state => state.appReducer.userPassword);
-
+    const formIsInvalid = enteredName === "" || enteredPassword === "";
+    
     const dispatch = useDispatch();
 
     const storeUser = async () => {
@@ -26,18 +26,11 @@ function Login({ navigation }) {
         }
     };
 
-    useEffect(() => {
-        storeUser();
-    }, []);
-
     function login() {
-        if (enteredName === "" && enteredPassword === "") {
-
-        } else {
-            navigation.navigate("Welcome")
-        }
+        storeUser();
+        navigation.navigate("Welcome")
     }
-    const formIsInvalid = enteredName === "" || enteredPassword === "";
+
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}

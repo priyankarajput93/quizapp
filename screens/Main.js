@@ -1,8 +1,6 @@
 
 import { useDispatch } from "react-redux";
-
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
-
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Welcome from "./Welcome";
 import Questions from "./Questions";
@@ -53,20 +51,29 @@ function Main() {
 
     return (
         <NavigationContainer theme={appTheme} >
-            <Stack.Navigator initialRouteName={(currentUser !== null) ? "Welcome" : "Login"}
+            <Stack.Navigator
+                initialRouteName={(currentUser !== null) ? "Welcome" : "Login"}
                 screenOptions={{
                     headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
                     headerTintColor: 'white',
                 }}>
-                <Stack.Screen name="Welcome" component={Welcome}
+                <Stack.Screen
+                    name="Welcome"
+                    component={Welcome}
                     options={{ headerShown: false }} />
-                <Stack.Screen name="Login" component={Login} />
-                <Stack.Screen name="Questions" component={Questions}
+                <Stack.Screen
+                    name="Login"
+                    component={Login} />
+                <Stack.Screen
+                    name="Questions"
+                    component={Questions}
                     options={{ headerShown: false }}
                 />
-                <Stack.Screen name="Result" component={Result}
+                <Stack.Screen
+                    name="Result"
+                    component={Result}
                     options={({ navigation }) => ({
-                        headerBackVisible:false,
+                        headerBackVisible: false,
                         headerRight: () => (
                             <Button
                                 onPress={() => {
@@ -83,5 +90,4 @@ function Main() {
         </NavigationContainer>
     );
 }
-
 export default Main;

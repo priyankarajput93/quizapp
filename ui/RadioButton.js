@@ -20,7 +20,8 @@ function RadioButton({ optionList, questionArray, disable }) {
     }, []);
 
     return (
-        <View style={styles.optionConatiner}>
+        <View
+            style={styles.optionConatiner}>
             {optionList.map(optionValue => (
                 <View
                     key={optionValue}

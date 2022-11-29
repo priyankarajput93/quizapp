@@ -1,5 +1,4 @@
 
-
 const BASE_URL = 'https://opentdb.com/api.php';
 
 export async function getQuestionsList(count, level) {
