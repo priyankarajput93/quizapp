@@ -3,7 +3,9 @@ import { GlobalStyles } from "../constants/Styles";
 
 function Loading() {
     return (<View style={style.container}>
-        <ActivityIndicator size="large" color={GlobalStyles.colors.primary700} />
+        <ActivityIndicator
+            size="large"
+            color={GlobalStyles.colors.primary700} />
     </View>);
 }
 

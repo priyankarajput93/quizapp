@@ -8,7 +8,7 @@ export async function getQuestionsList(count, level) {
         const json = await response.json();
         return json;
     } catch (error) {
-        alert(error);
-        console.log(error);
+        alert(error.message);
+        console.log(error.message);
     }
 }

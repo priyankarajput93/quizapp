@@ -1,7 +1,7 @@
 import { applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { configureStore } from '@reduxjs/toolkit';
-import AppReducer from "./Reducers";
+import AppReducer from "./Reducer";
 
 export const Store = configureStore(
     {

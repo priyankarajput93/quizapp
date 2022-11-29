@@ -15,13 +15,16 @@ function Result({ navigation }) {
 
     const renderItem = ({ item }) => (
         <View View style={style.itemContainer}>
-            <Text style={style.questionText}>{item.question}</Text>
+            <Text style={style.questionText}>{item.id}. {item.question}</Text>
             <RadioButton questionArray={item} disable={true}></RadioButton>
             {
                 item.isCorrectAnswer && <Text style={style.correctAnswerText}> Correct Answer</Text>
             }
             {
                 !item.isCorrectAnswer && <Text style={style.wrongAnswerText}> Wrong Answer</Text>
+            }
+            {
+                !item.isCorrectAnswer && <Text style={style.correctAnswerText}> Correct Answer: {item.correct_answer} </Text>
             }
         </View>
     );
@@ -38,7 +41,7 @@ function Result({ navigation }) {
                 questions.map((item, index) => {
                     if (item.isCorrectAnswer) {
                         totalScore = totalScore + 1;
-                    } 
+                    }
                 })
             }
             <Text Text style={style.totalScoreText}>Total Score: {totalScore}</Text>
@@ -62,7 +65,7 @@ const style = StyleSheet.create({
         color: GlobalStyles.colors.gray700,
         fontStyle: 'bold',
         textAlign: 'center',
-        marginTop:10
+        marginTop: 10
     },
     retryText: {
         fontSize: 18
@@ -91,11 +94,11 @@ const style = StyleSheet.create({
         fontSize: 16,
         fontStyle: 'bold',
         marginHorizontal: 20,
-        marginVertical: 10
+        marginTop: 10
     },
     correctAnswerText: {
         color: GlobalStyles.colors.green100,
-        fontSize: 18,
+        fontSize: 16,
         fontStyle: 'bold',
         marginHorizontal: 20,
         marginVertical: 10

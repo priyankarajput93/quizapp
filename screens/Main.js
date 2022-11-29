@@ -9,7 +9,7 @@ import Questions from "./Questions";
 import Login from "./Login";
 import Result from "./Result";
 import { GlobalStyles } from "../constants/Styles";
-import { clearData } from "../redux/Reducers";
+import { clearData } from "../redux/Reducer";
 import { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button } from "react-native";
@@ -66,6 +66,7 @@ function Main() {
                 />
                 <Stack.Screen name="Result" component={Result}
                     options={({ navigation }) => ({
+                        headerBackVisible:false,
                         headerRight: () => (
                             <Button
                                 onPress={() => {

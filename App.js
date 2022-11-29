@@ -7,11 +7,11 @@ import { Store } from "./redux/Store";
 import Main from "./screens/Main";
 
 const App = () => {
- 
+
   useEffect(() => {
-    
+
     const backAction = () => {
-      Alert.alert("Alert", "Are you sure you want to go back?", [
+      Alert.alert("Close App?", "Are you sure you want to close the application?", [
         {
           text: "Cancel",
           onPress: () => null,
@@ -34,12 +34,11 @@ const App = () => {
       <StatusBar barStyle={'light'} backgroundColor={GlobalStyles.colors.primary700} />
       <ImageBackground
         source={require('./assets/images/grey_background.jpg')}
-        //  source={ {uri: "https://reactjs.org/logo-og.png"} }
         resizeMode='cover'
         style={styles.rootScreen}
         imageStyle={styles.backgroundImage}>
         <Provider store={Store}>
-          <Main/>
+          <Main />
         </Provider>
       </ImageBackground>
     </>

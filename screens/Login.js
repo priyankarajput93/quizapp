@@ -3,7 +3,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalStyles } from "../constants/Styles";
 import Button from "../ui/Button";
-import { addUserName, addUserPassword } from "../redux/Reducers";
+import { addUserName, addUserPassword } from "../redux/Reducer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
 

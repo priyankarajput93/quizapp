@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import { useDispatch } from "react-redux";
 import { GlobalStyles } from "../constants/Styles";
-import { gameLevel } from "../redux/Reducers";
-
+import { gameLevel } from "../redux/Reducer";
 
 function RadioButton({ optionList, questionArray, disable }) {
 

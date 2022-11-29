@@ -6,39 +6,20 @@ import { GlobalStyles } from "../constants/Styles";
 import RadioButton from "../ui/RadioButton";
 import { useSelector } from "react-redux";
 import Loading from "../ui/Loading";
-import { apiStatus, setQuestionList } from "../redux/Reducers";
+import { apiStatus, setQuestionList } from "../redux/Reducer";
 import { useDispatch } from "react-redux";
-import { useNetInfo } from "@react-native-community/netinfo";
 import RetryView from "../ui/RetryView";
 
 function Questions({ navigation }) {
 
     const selectedGameLevel = useSelector(state => state.appReducer.level);
-    //   const { questionList, status, error } = useSelector((state) => state.appData);
     const dispatch = useDispatch();
-    const useInfo = useNetInfo();
     var count = 5;
     const questionList = useSelector(state => state.appReducer.questionList);
 
-    const [isAllQuestionsAnswered, setIsAllQuestionsAnswered] = useState(false);
     const status = useSelector(state => state.appReducer.status);
     const error = useSelector(state => state.appReducer.error);
 
-    //  var isAllQuestionsAnswered = false;
-    /*useEffect(() => {
-        async function getQuestions() {
-            //          const questions = await getQuestionsList(10, 'hard');
-            const questions = dispatch(getQuestionsList(10, selectedGameLevel));
-            if (getQuestionsList.fulfilled.match(questions)) {
-                // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
-              //  const question = questions.payload;
-              //  console.log(questions);
-
-                //alert(questions);
-              }
-        }
-        getQuestions();
-    }, []);*/
     useEffect(() => {
         getQuestions();
     }, [count]);
@@ -46,10 +27,12 @@ function Questions({ navigation }) {
     async function getQuestions() {
         dispatch(apiStatus('loading'));
         const response = await getQuestionsList(count, selectedGameLevel);
-
+        console.log(response);
         if (response !== null) {
             dispatch(apiStatus('succeeded'));
-            response.results.map((object) => {
+            response.results.map((object, index) => {
+                console.log(index);
+                object["id"] = index + 1;
                 object["allAnswerOptions"] = object.incorrect_answers;
                 object["allAnswerOptions"].push(object.correct_answer);
                 object["isCorrectAnswer"] = false;
@@ -61,7 +44,7 @@ function Questions({ navigation }) {
 
     const renderItem = ({ item }) => (
         <View style={style.itemContainer}>
-            <Text style={style.questionText}>{item.question}</Text>
+            <Text style={style.questionText}>{item.id}. {item.question}</Text>
             <RadioButton questionArray={item} correctAnswer={item.correct_answer}></RadioButton>
         </View>
     );
@@ -102,20 +85,21 @@ function Questions({ navigation }) {
                     <FlatList data={questionList}
                         keyExtractor={item => item.question}
                         renderItem={renderItem}
-                        onEndReached={updateCount}
-                        onEndReachedThreshold={0.1}
                     >
                     </FlatList>
                 </View>
                 <View style={style.buttonStyle}>
-                    <Button isEnable={isAllQuestionsAnswered} style={style.submitText} onPress={submitQuiz}>
+                    <Button style={style.submitText} onPress={submitQuiz}>
                         Submit
                     </Button>
                 </View>
             </View >
         );
     } else if (status === "failed") {
-        return (<Text>{error}</Text>);
+        return (
+            <Text>
+                {error}
+            </Text>);
     }
 }
 
