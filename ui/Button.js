@@ -3,7 +3,8 @@ import { GlobalStyles } from "../constants/Styles";
 
 function Button({ children, onPress, mode, style, isEnable }) {
     return (
-        <View style={style}>
+        <View
+            style={style}>
             <Pressable
                 disabled={isEnable}
                 onPress={onPress}
@@ -14,7 +15,7 @@ function Button({ children, onPress, mode, style, isEnable }) {
                     mode === 'flat' || isEnable && styles.flat]}>
                     <Text
                         style={[styles.buttonText,
-                            mode === 'flat' || isEnable && styles.flatText]}>
+                        mode === 'flat' || isEnable && styles.flatText]}>
                         {children}
                     </Text>
                 </View>

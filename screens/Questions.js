@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text, FlatList } from "react-native";
 import Button from "../ui/Button";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getQuestionsList } from "../api/ApiService";
 import { GlobalStyles } from "../constants/Styles";
 import RadioButton from "../ui/RadioButton";
@@ -9,12 +9,13 @@ import Loading from "../ui/Loading";
 import { apiStatus, setQuestionList } from "../redux/Reducer";
 import { useDispatch } from "react-redux";
 import MessageView from "../ui/MessageView";
+import RenderHTMLView from "../ui/RenderHTMLView";
 
 function Questions({ navigation }) {
 
     const selectedGameLevel = useSelector(state => state.appReducer.level);
     const dispatch = useDispatch();
-    const count = 30;
+    const count = 20;
     const questionList = useSelector(state => state.appReducer.questionList);
     const status = useSelector(state => state.appReducer.status);
     const error = useSelector(state => state.appReducer.error);
@@ -41,19 +42,19 @@ function Questions({ navigation }) {
         }
     }
 
-    const renderItem = ({ item }) => (
-        <View
-            style={style.itemContainer}>
-            <Text
-                style={style.questionText}>
-                {item.id}. {item.question}
-            </Text>
-            <RadioButton
-                questionArray={item}
-                correctAnswer={item.correct_answer}>
-            </RadioButton>
-        </View>
-    );
+    const renderItem = ({ item }) => {
+        const data = item.id + '. ' + item.question
+        return (
+            <View
+                style={style.itemContainer}>
+                <RenderHTMLView text={data}></RenderHTMLView>
+                <RadioButton
+                    questionArray={item}
+                    correctAnswer={item.correct_answer}>
+                </RadioButton>
+            </View>
+        )
+    };
 
     function submitQuiz() {
         var showAlert = false;
@@ -124,13 +125,6 @@ const style = StyleSheet.create({
     buttonStyle: {
         marginHorizontal: 20,
         marginVertical: 20,
-    },
-    questionText: {
-        fontSize: 18,
-        color: GlobalStyles.colors.primary700,
-        fontStyle: 'bold',
-        marginHorizontal: 10,
-        marginVertical: 10,
     },
     optionText: {
         fontSize: 16,

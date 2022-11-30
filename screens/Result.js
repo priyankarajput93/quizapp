@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { GlobalStyles } from "../constants/Styles";
 import Button from "../ui/Button";
 import RadioButton from "../ui/RadioButton";
+import RenderHTMLView from "../ui/RenderHTMLView";
 
 function Result({ navigation }) {
 
@@ -13,21 +14,24 @@ function Result({ navigation }) {
         navigation.navigate("Welcome");
     }
 
-    const renderItem = ({ item }) => (
-        <View View style={style.itemContainer}>
-            <Text style={style.questionText}>{item.id}. {item.question}</Text>
-            <RadioButton questionArray={item} disable={true}></RadioButton>
-            {
-                item.isCorrectAnswer && <Text style={style.correctAnswerText}> Correct Answer</Text>
-            }
-            {
-                !item.isCorrectAnswer && <Text style={style.wrongAnswerText}> Wrong Answer</Text>
-            }
-            {
-                !item.isCorrectAnswer && <Text style={style.correctAnswerText}> Correct Answer - {item.correct_answer} </Text>
-            }
-        </View>
-    );
+    const renderItem = ({ item }) => {
+        const data = item.id + '. ' + item.question
+        return (
+            <View View style={style.itemContainer}>
+                <RenderHTMLView text={data}></RenderHTMLView>
+                <RadioButton questionArray={item} disable={true}></RadioButton>
+                {
+                    item.isCorrectAnswer && <Text style={style.correctAnswerText}> Correct Answer</Text>
+                }
+                {
+                    !item.isCorrectAnswer && <Text style={style.wrongAnswerText}> Wrong Answer</Text>
+                }
+                {
+                    !item.isCorrectAnswer && <Text style={style.correctAnswerText}> Correct Answer - {item.correct_answer} </Text>
+                }
+            </View>
+        );
+    }
     return (
         <View
             style={style.container}>
@@ -83,13 +87,6 @@ const style = StyleSheet.create({
     buttonStyle: {
         marginHorizontal: 20,
         marginVertical: 20,
-    },
-    questionText: {
-        fontSize: 18,
-        color: GlobalStyles.colors.primary800,
-        fontStyle: 'bold',
-        marginHorizontal: 10,
-        marginVertical: 10
     },
     itemContainer: {
         backgroundColor: 'white',
