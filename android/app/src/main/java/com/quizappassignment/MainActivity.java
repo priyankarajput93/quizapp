@@ -1,4 +1,4 @@
-package com.quizapp;
+package com.quizappassignment;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
