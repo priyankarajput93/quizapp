@@ -1,4 +1,4 @@
-import {StyleSheet, View, Text, FlatList} from 'react-native';
+import {StyleSheet, View, Text, FlatList, Alert} from 'react-native';
 import Button from '../ui/Button';
 import {useEffect} from 'react';
 import {getQuestionsList} from '../api/ApiService';
@@ -62,7 +62,7 @@ function Questions({navigation}) {
       }
     });
     if (showAlert) {
-      alert('Kindly answer all the questions');
+      Alert.alert('Warning!','Kindly answer all the questions');
     } else {
       navigation.navigate('Result');
     }
